@@ -2,12 +2,12 @@ import { hostNameUrl } from "../config/api";
 import axios from "axios";
 
 
-export const getMyBonds = (userId) => {
+export const getMyBonds = () => {
   const bonds = axios.get(`${hostNameUrl}/getMyBonds`);
   return bonds;
 }
 
-export const getMyTradesByBondId = (bondId, userId) => {
+export const getMyTradesByBondId = (bondId) => {
   const trades = axios.get(`${hostNameUrl}/getMyTradesByBondId?bondId=${bondId}`);
   return trades;
 }
