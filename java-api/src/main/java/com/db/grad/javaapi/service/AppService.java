@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AppService {
@@ -126,6 +125,12 @@ public class AppService {
         return userService.redeemBond(bondToRedeem);
     }
 
+    public List<Bond> getRedeemedBonds(int userId) {
+        User user = userService.findById(userId) ;
+        List<Integer> bookIds = bookService.getBookIdsByUser(user) ;
+        return bondService.findAllRedeemedBonds(bookIds) ;
+    }
+
 
     public User findByUserName(String username) {
         return userService.findByUsername(username);
@@ -143,4 +148,6 @@ public class AppService {
         user.setBooks(existingBooks);
         userService.save(user);
     }
+
+
 }
