@@ -8,7 +8,7 @@ const Footer = () => {
           Deutsche Bank &copy; {new Date().getFullYear()}
         </p>
         <p className="mt-1" style={{ fontSize: '10px', color: 'rgba(255, 255, 255, 0.5)' }}>
-          This app was developed by "our names" for the 2023 coding challenge
+          This app was developed by Cem Balaban, Ethan Zeh, Konstantinos Poulinakis, and Obi Chukwuna for the 2023 coding challenge
         </p>
       </div>
     </footer>

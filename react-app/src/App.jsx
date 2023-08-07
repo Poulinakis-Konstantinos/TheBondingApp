@@ -10,8 +10,8 @@ import User from './pages/User';
 import jwt_decode from 'jwt-decode'
 import axios from 'axios';
 import Footer from "./components/Footer";
-
-
+import HomePage from "./pages/HomePage";
+import "./App.css";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
@@ -61,6 +61,7 @@ const App = () => {
             <Route path="/Details/:bondId" element={<Details />} />
             <Route path="/" element={<Home />} />
             <Route path="/user" element={<User username={username} />} />
+            <Route path="/HomePageTest"element={<HomePage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
           <Footer />

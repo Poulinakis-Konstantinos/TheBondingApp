@@ -145,5 +145,3 @@ const sortByDate = (arr) =>{
 }
 
 export default Home;
-
-
