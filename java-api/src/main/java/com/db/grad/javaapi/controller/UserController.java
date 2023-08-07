@@ -1,6 +1,8 @@
 package com.db.grad.javaapi.controller;
 
-import com.db.grad.javaapi.model.Bond;
+import com.db.grad.javaapi.config.JWTTokenVerifier;
+import com.db.grad.javaapi.exception.ResourceNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.sasl.AuthenticationException;
+import java.util.List;
 import java.util.Map;
 
 
@@ -27,6 +31,7 @@ public class UserController {
 
     private final UserService userService;
     private final JWTTokenGenerator tokenGenerator;
+    private JWTTokenVerifier tokenVerifier ;
     private AppService as ;
 
     @Autowired
@@ -34,6 +39,7 @@ public class UserController {
         this.userService = userService;
         this.tokenGenerator = tokenGenerator;
         this.as = as;
+        this.tokenVerifier = tokenVerifier;
     }
 
     @PostMapping
@@ -72,6 +78,26 @@ public class UserController {
       @GetMapping("/RedeemBond")
     public Boolean redeemBond(Integer bondId){
         return as.redeemBondById(bondId) ;
+    }
+
+    @GetMapping("getMyClients")
+    public List<String> getMyClients(@RequestHeader("Authorization") String token) throws AuthenticationException, ResourceNotFoundException {
+        int userId = unpackUserId(token);
+        return as.getUserClientNames(userId);
+    }
+
+    int unpackUserId(String token) throws ResourceNotFoundException, AuthenticationException {
+        if (!tokenVerifier.verify(token)) {
+            throw new AuthenticationException();
+        }
+
+        String usernameFromToken = tokenVerifier.getUsername(token);
+        User user = as.findByUserName(usernameFromToken);
+        if (user == null) {
+            throw new ResourceNotFoundException();
+        }
+
+        return user.getId();
     }
 
 }

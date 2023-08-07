@@ -84,6 +84,5 @@ public class BookServiceTest {
 
         assertEquals(Arrays.asList(0, 0), result); // Modify this assertion based on actual book IDs
     }
-
     // Add more test cases for other methods in BookService
 }
