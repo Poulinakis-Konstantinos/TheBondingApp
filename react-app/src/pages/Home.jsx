@@ -119,5 +119,3 @@ const ResetMyBonds = () =>{
 }
 
 export default Home;
-
-
