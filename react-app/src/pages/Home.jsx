@@ -1,8 +1,11 @@
 import Datepicker from "../components/Datepicker";
 import Table from "../components/Table";
-import { getBondsByUserId, getBondsNextFive, getBondsLastFive } from "../services/BookService";
+import { getMyBonds, getMyBondsLastFive, getMyBondsNextFive } from "../services/BookService";
 import { useState, useEffect } from "react";
 import React from 'react'
+import Nav from 'react-bootstrap/Nav';
+import Container from 'react-bootstrap/Container';
+import Tab from 'react-bootstrap/Tab'
 
 const columns = [
   {
@@ -47,31 +50,71 @@ const columns = [
 const Home = () =>  {
 
 const [totalLastNextBonds, setTotalLastNextBonds] = useState([]);
+const [bonds, setBonds] = useState([]);
 
 
 const getBondsByMaturityDate = (date) =>{
   var datestring = date.toISOString().substring(0, 10);
-   getBondsNextFive(datestring, 1).then((bond) => {setTotalLastNextBonds([...totalLastNextBonds, ...bond.data]);console.log(totalLastNextBonds)})
-   getBondsLastFive(datestring, 1).then((bond) => {setTotalLastNextBonds([...totalLastNextBonds, ...bond.data]); console.log(totalLastNextBonds)})
+  setBonds([]);   setTotalLastNextBonds([])
+  console.log("Checking",bonds,totalLastNextBonds)
+  let k = []
+  getMyBondsNextFive(datestring).then((bond) => {setTotalLastNextBonds(k = bond.data)})
+  getMyBondsLastFive(datestring).then((bond) => { k = k.concat(bond.data); setTotalLastNextBonds(k)})
+
 }
-  const [bonds, setBonds] = useState([]);
+
+const ResetMyBonds = () =>{
+  console.log("Rest Bonds here")
+}
+
+// useEffect(() => {
+//   getMyBonds().then(({data}) => {
+//           setBonds(data);
+//         })
+// }, []);
 
   useEffect(() => {
-    getBondsByUserId(1).then(({data}) => {
+    getMyBonds().then(({data}) => {
             setBonds(data);
           })
   }, []);
 
-  useEffect(() => {
-            setBonds(totalLastNextBonds);
-          }
+  useEffect(() => { setBonds(totalLastNextBonds) }
   , [totalLastNextBonds]);
 
   return (
     <>
-    <Datepicker getBondsByMaturityDate= {getBondsByMaturityDate}/>
+    <Datepicker getBondsByMaturityDate= {getBondsByMaturityDate} restBonds= {ResetMyBonds}/>
     <Table data={bonds} columns={columns}/>
     </>
+    // <Container>
+    //   <Nav justify variant="tabs" defaultActiveKey="/home">
+    //     <Nav.Item>
+    //       <Nav.Link >My Bonds</Nav.Link>
+    //     </Nav.Item>
+    //     <Nav.Item>
+    //       <Nav.Link eventKey="link-1">Loooonger NavLink</Nav.Link>
+    //     </Nav.Item>
+    //     <Nav.Item>
+    //       <Nav.Link eventKey="link-2">Link</Nav.Link>
+    //     </Nav.Item>
+    //     <Nav.Item>
+    //       <Nav.Link eventKey="disabled" disabled>
+    //         Disabled
+    //       </Nav.Link>
+    //     </Nav.Item>
+    //   </Nav>
+    //   <Tab.Content>
+    //         <Tab.Pane eventKey="link-1">This is for the first nav tab</Tab.Pane>
+    //         <Tab.Pane eventKey="link-2">
+    //           This is for the second nav tab
+    //         </Tab.Pane>
+    //         <Tab.Pane eventKey="disabled">
+    //           I guess this is for the third nav tab
+    //         </Tab.Pane>
+    //       </Tab.Content>
+    // </Container>
+
   )
 }
 

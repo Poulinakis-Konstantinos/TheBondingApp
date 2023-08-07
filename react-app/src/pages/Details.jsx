@@ -3,7 +3,7 @@ import Table from "../components/Table";
 import {useParams} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import React from 'react'
-import { getTradesByUserAndBondId } from "../services/BookService";
+import { getMyTradesByBondId } from "../services/BookService";
 
 const columns = [
   {
@@ -43,12 +43,12 @@ const columns = [
 
 const Details = () =>  {
   const params  =  useParams()
-
+  console.log(params)
   const [trades, setTrades] = useState([]);
 
   useEffect(() => {
-    getTradesByUserAndBondId(params.bondId, 1).then(({data}) => {
-      setTrades(data);
+    getMyTradesByBondId(params.bondId).then(({data}) => {
+    setTrades(data);
           })
   }, []);
 

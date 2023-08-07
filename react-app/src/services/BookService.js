@@ -2,23 +2,23 @@ import { hostNameUrl } from "../config/api";
 import axios from "axios";
 
 
-export const getBondsByUserId = (userId) => {
-  const bonds = axios.get(`${hostNameUrl}/getBondsByUserId?userId=${userId}`);
+export const getMyBonds = (userId) => {
+  const bonds = axios.get(`${hostNameUrl}/getMyBonds`);
   return bonds;
 }
 
-export const getTradesByUserAndBondId = (bondId, userId) => {
-  const trades = axios.get(`${hostNameUrl}/getTradesByBondIdAndUserId?bondId=${bondId}&userId=${userId}`);
+export const getMyTradesByBondId = (bondId, userId) => {
+  const trades = axios.get(`${hostNameUrl}/getMyTradesByBondId?bondId=${bondId}`);
   return trades;
 }
 
-export const getBondsNextFive = (date, userId) => {
-  const bondsNextFive = axios.get(`${hostNameUrl}/getBondsIn5Days?date=${date}&userId=${userId}`);
+export const getMyBondsNextFive = (date) => {
+  const bondsNextFive = axios.get(`${hostNameUrl}/getMyBondsIn5days?date=${date}`);
   return bondsNextFive;
 }
 
-export const getBondsLastFive = (date, userId) => {
-  const bondsLastFive = axios.get(`${hostNameUrl}/getBondsBefore5Days?date=${date}&userId=${userId}`);
+export const getMyBondsLastFive = (date) => {
+  const bondsLastFive = axios.get(`${hostNameUrl}/getMyBondsBefore5Days?date=${date}`);
   return bondsLastFive;
 }
 
