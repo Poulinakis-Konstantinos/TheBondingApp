@@ -120,4 +120,12 @@ public class AppService {
         List<Integer> bookIds = bookService.getBookIdsByUser(user);
         return tradeService.findTradesByBondIdAndUserId(bondId, bookIds);
     }
+
+    public User findByUserName(String username) {
+        return userService.findByUsername(username);
+    }
+
+    public User findUserById(int id){
+        return userService.findById(id);
+    }
 }
