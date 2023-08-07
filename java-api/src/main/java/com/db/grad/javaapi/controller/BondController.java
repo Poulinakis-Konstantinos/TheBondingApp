@@ -153,6 +153,35 @@ public class BondController {
         return user.getBooks();
     }
 
+
+    @GetMapping("/getMyBonds")
+    public List<Bond> getMyBonds(@RequestHeader("Authorization") String token) throws AuthenticationException, ResourceNotFoundException {
+        int userId = unpackUserId(token);
+        return s.findBondsByUserId(userId);
+    }
+
+    @GetMapping("/getMyTradesByBondId")
+    public List<Trade> getBondsByBondIdAndUserId(@RequestHeader("Authorization") String token, @RequestParam int bondId) throws AuthenticationException, ResourceNotFoundException {
+        int userId = unpackUserId(token);
+        return s.findTradesByBondIdAndUserId(bondId, userId);
+    }
+
+
+
+    //    // USE OF THESE API LOOKS LIKE THIS: ./getMyBondsIn5Days?date=2023-08-10
+    @GetMapping("/getMyBondsIn5days")
+    public List<Bond> findMyBondsWithMaturityDateInFiveDays(@RequestHeader("Authorization") String token, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) throws AuthenticationException, ResourceNotFoundException {
+        int userId = unpackUserId(token);
+        return s.findUserBondsWithMaturityDateInFiveDays(date, userId);
+    }
+    // USE OF THESE API LOOKS LIKE THIS: ./getMyBondsBefore5Days?date=2023-08-10
+    @GetMapping("/getMyBondsBefore5Days")
+    public List<Bond> findMyBondsWithMaturityDateFiveDaysBefore(@RequestHeader("Authorization") String token, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) throws AuthenticationException, ResourceNotFoundException {
+        int userId = unpackUserId(token);
+        return s.findUserBondsWithMaturityDateFiveDaysBefore(date, userId);
+    }
+
+
     private int unpackUserId(String token) throws ResourceNotFoundException, AuthenticationException {
         if (!tokenVerifier.verify(token)) {
             throw new AuthenticationException();
