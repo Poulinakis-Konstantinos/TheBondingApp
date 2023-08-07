@@ -71,12 +71,12 @@ public class DataLoader {
                         String cusip = record.get(9);
                         Double faceValue = Double.parseDouble(record.get(10));
                         String isin = record.get(11);
-                        String issuerName = record.get(12);
+                        String issuerName = record.get(12).toLowerCase();
                         String bondMaturityDate = record.get(13);
                         String bondStatus = record.get(14);
                         String type = record.get(15);
                         String bookName = record.get(16).toLowerCase();
-                        String bondHolder = record.get(17);
+                        String bondHolder = record.get(17).toLowerCase();
 
 
                         BondCounterParty existingBondCounterParty = bondCounterPartyRepository.findByName(issuerName);
