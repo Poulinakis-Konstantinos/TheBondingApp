@@ -22,6 +22,7 @@ public class UserRepositoryTest {
 
         // act
         user.setUserName("Mike");
+        user.setPassword("pass");
         List<Book> books = br.findAll() ;
         for(Book book: books) {
             System.out.println("A book list : " + book);

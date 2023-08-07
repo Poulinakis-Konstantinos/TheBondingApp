@@ -35,7 +35,7 @@ public class BondService {
     }
 
     public Bond findById(int id){
-        return br.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return br.findById(id).orElseThrow(() -> new EntityNotFoundException("Bond not found"));
     }
 
     public List<Bond> findBondsWithMaturityDateInFiveDays(LocalDate currentDate){

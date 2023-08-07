@@ -36,7 +36,7 @@ public class BookService {
 
 
     public Book findById(int id) {
-        return br.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return br.findById(id).orElseThrow(() -> new EntityNotFoundException("Book not found"));
     }
 
     public List<Integer> getBookIdsByUser(User user) {
