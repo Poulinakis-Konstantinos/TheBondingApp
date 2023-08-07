@@ -1,19 +1,16 @@
 package com.db.grad.javaapi.service;
 
 
-import com.db.grad.javaapi.model.Bond;
 import com.db.grad.javaapi.model.Book;
+import com.db.grad.javaapi.model.TradeCounterParty;
 import com.db.grad.javaapi.model.User;
-import com.db.grad.javaapi.repository.BondRepository;
 import com.db.grad.javaapi.repository.BookRepository;
-import com.db.grad.javaapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
@@ -46,5 +43,9 @@ public class BookService {
             bookIds.add(book.getId()) ;
         }
         return bookIds ;
+    }
+
+    public List<String> getClientNamesInBooks(List<Integer> bookIds){
+        return br.getClientNamesInBooks(bookIds) ;
     }
 }

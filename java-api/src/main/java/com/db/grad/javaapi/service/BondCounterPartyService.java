@@ -27,6 +27,6 @@ public class BondCounterPartyService {
 
 
     public BondCounterParty findById(int id){
-        return br.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return br.findById(id).orElseThrow(() -> new EntityNotFoundException("BondCounterParty not found"));
     }
 }
