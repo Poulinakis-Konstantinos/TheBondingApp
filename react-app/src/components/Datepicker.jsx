@@ -14,7 +14,7 @@ const Datepicker = (props) => {
       <Button className="" variant="success" onClick={() => { setStartDate(new Date());
         props.getBondsByMaturityDate(startDate)}}>Today</Button>
       &nbsp; &nbsp;
-      <DatePicker className="form-control" selected={startDate} onChange={(date) => {
+      <DatePicker className="form-control"  dateFormat="MMMM d, yyyy" selected={startDate} onChange={(date) => {
       setStartDate(date);
       props.getBondsByMaturityDate(date)}
     } />
