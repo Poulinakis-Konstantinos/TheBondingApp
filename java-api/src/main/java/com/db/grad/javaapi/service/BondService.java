@@ -1,8 +1,10 @@
 package com.db.grad.javaapi.service;
-
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import com.db.grad.javaapi.model.Bond;
 import com.db.grad.javaapi.repository.BondRepository;
+import org.hibernate.resource.beans.container.spi.BeanLifecycleStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.util.List;
 @Service
 public class BondService {
     private BondRepository br;
+
 
     @Autowired
     public BondService(BondRepository itsBondRepo) {
@@ -59,4 +62,6 @@ public class BondService {
         LocalDate targetDate = currentDate.plusDays(5);
         return br.findUserBondsWithMaturityDateInFiveDays(currentDate, targetDate, bookIds) ;
     }
+
+
 }

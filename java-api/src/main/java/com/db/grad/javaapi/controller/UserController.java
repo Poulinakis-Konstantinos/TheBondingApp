@@ -1,5 +1,10 @@
 package com.db.grad.javaapi.controller;
 
+import com.db.grad.javaapi.model.Bond;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import com.db.grad.javaapi.service.AppService;
 import com.db.grad.javaapi.config.JWTTokenGenerator;
 import com.db.grad.javaapi.model.User;
 import com.db.grad.javaapi.service.UserService;
@@ -12,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+
+
+
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -19,10 +27,13 @@ public class UserController {
 
     private final UserService userService;
     private final JWTTokenGenerator tokenGenerator;
+    private AppService as ;
 
-    public UserController(UserService userService, JWTTokenGenerator tokenGenerator) {
+    @Autowired
+    public UserController(UserService userService, JWTTokenGenerator tokenGenerator, AppService as) {
         this.userService = userService;
         this.tokenGenerator = tokenGenerator;
+        this.as = as;
     }
 
     @PostMapping
@@ -56,6 +67,11 @@ public class UserController {
             // Return 401 status code and error message if login fails
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong username or password");
         }
+    }
+  
+      @GetMapping("/RedeemBond")
+    public Boolean redeemBond(Integer bondId){
+        return as.redeemBondById(bondId) ;
     }
 
 }

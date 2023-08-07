@@ -68,3 +68,4 @@ env.bak/
 venv.bak/
 {"mode":"full","isActive":false}
 /java-api/src/main/resources/data/myh2db.mv.db
+/java-api/java-api/src/main/resources/data/myh2db.mv.db

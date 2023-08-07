@@ -121,6 +121,12 @@ public class AppService {
         return tradeService.findTradesByBondIdAndUserId(bondId, bookIds);
     }
 
+    public Boolean redeemBondById(Integer bondId) {
+        Bond bondToRedeem = bondService.findById(bondId);
+        return userService.redeemBond(bondToRedeem);
+    }
+
+
     public User findByUserName(String username) {
         return userService.findByUsername(username);
     }
@@ -128,4 +134,5 @@ public class AppService {
     public User findUserById(int id){
         return userService.findById(id);
     }
+
 }
