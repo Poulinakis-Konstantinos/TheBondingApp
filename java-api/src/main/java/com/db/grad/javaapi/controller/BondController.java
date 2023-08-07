@@ -67,7 +67,11 @@ public class BondController {
         return s.getAllBooks();
     }
 
-
+    @GetMapping("/getRedeemedBonds")
+    public List<Bond> getRedeemedBonds(@RequestHeader("Authorization") String token) throws AuthenticationException, ResourceNotFoundException {
+        int userId = unpackUserId(token);
+        return s.getRedeemedBonds(userId);
+    }
 
     //These need userId param
     // USE OF THESE API LOOKS LIKE THIS: ./getBondsByUserId?userId=0

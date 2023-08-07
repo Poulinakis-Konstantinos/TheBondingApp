@@ -37,4 +37,7 @@ public interface BondRepository extends JpaRepository<Bond, Integer> {
     List<Bond> findUserBondsWithMaturityDateInFiveDays(@Param("startDate") LocalDate startDate,
                                                        @Param("endDate") LocalDate endDate,
                                                        @Param("bookIds") List<Integer> bookIds);
+
+    @Query(value="SELECT * FROM bond WHERE id IN (SELECT bond_id FROM trade WHERE book_id IN bookIds) AND bond_Status = 'redeemed' ", nativeQuery = true)
+    List<Bond> findAllRedeemedBonds(@Param("bookIds") List<Integer> bookIds);
 }
