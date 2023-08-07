@@ -105,6 +105,17 @@ public class Bond {
         this.bondCounterParty = bondCounterParty;
     }
 
+    public Boolean IsMatured(){
+        LocalDate currentDate = LocalDate.now();
+        LocalDate maturityDate = this.getBondMaturityDate();
+        return currentDate.isAfter(maturityDate) ;
+    }
+    public Boolean NotMatured(){
+        LocalDate currentDate = LocalDate.now();
+        LocalDate maturityDate = this.getBondMaturityDate();
+        return currentDate.isBefore(maturityDate) ;
+    }
+
     public List<Integer> getTradeIds() {
         return trades.stream()
                 .map(Trade::getId)

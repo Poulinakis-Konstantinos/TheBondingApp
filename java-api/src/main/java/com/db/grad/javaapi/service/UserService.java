@@ -1,6 +1,8 @@
 package com.db.grad.javaapi.service;
 
+import com.db.grad.javaapi.model.Bond;
 import com.db.grad.javaapi.model.User;
+import com.db.grad.javaapi.repository.BondRepository;
 import com.db.grad.javaapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -9,16 +11,23 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 public class UserService {
+  
     private UserRepository ur;
     private final BCryptPasswordEncoder passwordEncoder;
+    private BondRepository br;
+    private final Lock redeemLock = new ReentrantLock() ;
 
     @Autowired
-    public UserService(UserRepository ur, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserRepository ur, BCryptPasswordEncoder passwordEncoder,  BondRepository br) {
         this.ur = ur;
         this.passwordEncoder = passwordEncoder;
+        this.br = br;
+
     }
 
     public void saveUser(User user) { ur.save(user) ;}
@@ -41,6 +50,28 @@ public class UserService {
         return ur.save(user);
     }
 
+
+    public Boolean redeemBond(Bond bondToRedeem) {
+        redeemLock.lock();  //Acquire the lock - other users can't interfere
+        try {
+            if(bondToRedeem.getBondStatus().equals("redeemed") ){
+                // set the status to Redeemed
+                System.out.println("PROCESSING ERROR: The bond has already been redeemed.");
+                return false;
+            } else if(bondToRedeem.NotMatured()) {
+                System.out.println("PROCESSING ERROR: Bond has not matured and can't be redeemed yet.");
+                return false;
+            }
+
+            // Change the bonds status if checks have passed.
+            bondToRedeem.setBondStatus("redeemed");
+            br.save(bondToRedeem) ;
+
+        } finally {
+            redeemLock.unlock(); // Release the lock
+        }
+        return true;
+
     public User findByUsername(String username) {
         return ur.findByUserName(username);
     }
@@ -58,5 +89,6 @@ public class UserService {
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         ur.save(user);
+
     }
 }
