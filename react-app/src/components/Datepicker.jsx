@@ -1,29 +1,30 @@
-import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { Button } from 'react-bootstrap';
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
 
-const Datepicker = () => {
+import "react-datepicker/dist/react-datepicker.css";
+import Button from 'react-bootstrap/Button';
+
+// CSS Modules, react-datepicker-cssmodules.css
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+
+const Datepicker = (props) => {
   const [startDate, setStartDate] = useState(new Date());
 
   return (
-    <div className="container my-4">
-      <div className="d-flex align-items-center">
-        <Button
-          variant="success"
-          onClick={() => setStartDate(new Date())}
-          style={{ marginRight: '10px' }}
-        >
-          Today
-        </Button>
-        <DatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          className="form-control"
-        />
-      </div>
-    </div>
+    <>
+    <div className="container mt-5">
+    <Button className="" variant="success">All Bonds</Button>
+    &nbsp;
+    <Button className="" variant="success" onclick>Today</Button>
+    &nbsp; &nbsp;
+    <DatePicker selected={startDate} onChange={(date) => {
+      setStartDate(date);
+      props.getBondsByMaturityDate(date)}
+    } />
+    </div> 
+    </>
   );
+
 };
 
 export default Datepicker;
