@@ -1,21 +1,26 @@
 import { hostNameUrl } from "../config/api";
 import axios from "axios";
 
-export const getBooks = () => {
-  const pets = [{id:1,name:"Obi",age:23}];
-  //const pets = axios.get(`${hostNameUrl}/dogs`);
-  return pets;
+
+export const getBondsByUserId = (userId) => {
+  const bonds = axios.get(`${hostNameUrl}/getBondsByUserId?userId=${userId}`);
+  return bonds;
 }
 
-export const getTransactionsByBookId = (Id) => {
-    const pets = [{id:1,name:"Obi",age:23}];
-    //const pets = axios.get(`${hostNameUrl}/dogs/Id`);
-    return pets;
-  }
+export const getTradesByUserAndBondId = (bondId, userId) => {
+  const trades = axios.get(`${hostNameUrl}/getTradesByBondIdAndUserId?bondId=${bondId}&userId=${userId}`);
+  return trades;
+}
 
-  export const getbooksByDate = (date) => {
-    const pets = [{id:1,name:"Obi",age:23}];
-    //const pets = axios.get(`${hostNameUrl}/dogs/Id`);
-    return pets;
-  }
+export const getBondsNextFive = (date, userId) => {
+  const bondsNextFive = axios.get(`${hostNameUrl}/getBondsIn5Days?date=${date}&userId=${userId}`);
+  return bondsNextFive;
+}
+
+export const getBondsLastFive = (date, userId) => {
+  const bondsLastFive = axios.get(`${hostNameUrl}/getBondsBefore5Days?date=${date}&userId=${userId}`);
+  return bondsLastFive;
+}
+
+
 
