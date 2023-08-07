@@ -135,4 +135,12 @@ public class AppService {
         return userService.findById(id);
     }
 
+    public void addBooksToUser(int userId, List<Integer> bookIds) {
+        User user = userService.findById(userId);
+        List<Book> existingBooks = user.getBooks();
+        List<Book> books = bookService.findAllById(bookIds);
+        existingBooks.addAll(books);
+        user.setBooks(existingBooks);
+        userService.save(user);
+    }
 }

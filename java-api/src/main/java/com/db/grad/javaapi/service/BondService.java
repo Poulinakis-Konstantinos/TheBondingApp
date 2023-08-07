@@ -55,7 +55,8 @@ public class BondService {
 
     public List<Bond> findUserBondsWithMaturityDateFiveDaysBefore(LocalDate currentDate, List<Integer> bookIds) {
         LocalDate targetDate = currentDate.minusDays(5);
-        return br.findUserBondsWithMaturityDateFiveDaysBefore(targetDate, currentDate, bookIds) ;
+        LocalDate newCurrentDate = currentDate.minusDays(1);
+        return br.findUserBondsWithMaturityDateFiveDaysBefore(targetDate, newCurrentDate, bookIds) ;
     }
 
     public List<Bond> findUserBondsWithMaturityDateInFiveDays(LocalDate currentDate, List<Integer> bookIds) {

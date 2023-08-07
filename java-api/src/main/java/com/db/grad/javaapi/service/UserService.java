@@ -54,23 +54,24 @@ public class UserService {
     public Boolean redeemBond(Bond bondToRedeem) {
         redeemLock.lock();  //Acquire the lock - other users can't interfere
         try {
-            if(bondToRedeem.getBondStatus().equals("redeemed") ){
+            if (bondToRedeem.getBondStatus().equals("redeemed")) {
                 // set the status to Redeemed
                 System.out.println("PROCESSING ERROR: The bond has already been redeemed.");
                 return false;
-            } else if(bondToRedeem.NotMatured()) {
+            } else if (bondToRedeem.NotMatured()) {
                 System.out.println("PROCESSING ERROR: Bond has not matured and can't be redeemed yet.");
                 return false;
             }
 
             // Change the bonds status if checks have passed.
             bondToRedeem.setBondStatus("redeemed");
-            br.save(bondToRedeem) ;
+            br.save(bondToRedeem);
 
         } finally {
             redeemLock.unlock(); // Release the lock
         }
         return true;
+    }
 
     public User findByUsername(String username) {
         return ur.findByUserName(username);

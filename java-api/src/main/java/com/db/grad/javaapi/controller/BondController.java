@@ -177,6 +177,15 @@ public class BondController {
     }
 
 
+    @PostMapping("/users/addToMyBooks")
+    public ResponseEntity<Void> assignBooksToUser(
+            @RequestHeader("Authorization") String token,
+            @RequestBody List<Integer> bookIds) throws AuthenticationException, ResourceNotFoundException {
+        int userId = unpackUserId(token);
+        s.addBooksToUser(userId, bookIds);
+        return ResponseEntity.ok().build();
+    }
+
     private int unpackUserId(String token) throws ResourceNotFoundException, AuthenticationException {
         if (!tokenVerifier.verify(token)) {
             throw new AuthenticationException();

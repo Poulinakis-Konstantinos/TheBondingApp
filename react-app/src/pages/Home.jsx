@@ -57,7 +57,7 @@ const getBondsByMaturityDate = (date) =>{
   const [bonds, setBonds] = useState([]);
 
   useEffect(() => {
-    getBondsByUserId(1).then(({data}) => {
+    getBondsByUserId().then(({data}) => {
             setBonds(data);
           })
   }, []);
