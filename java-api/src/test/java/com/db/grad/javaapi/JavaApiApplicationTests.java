@@ -1,16 +1,23 @@
-package com.db.grad.javaapi;
+package test.javaapi;
 
-import org.junit.jupiter.api.Test;
+import com.db.grad.javaapi.repository.BondRepositoryTest;
+import com.db.grad.javaapi.repository.BookRepositoryTest;
+import com.db.grad.javaapi.repository.UserRepositoryTest;
+import com.db.grad.javaapi.service.BondServiceTest;
+import com.db.grad.javaapi.service.BookServiceTest;
+import com.db.grad.javaapi.service.UserServiceTest;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.runners.Suite;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-class JavaApiApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+		BondRepositoryTest.class,
+		BookRepositoryTest.class,
+		UserRepositoryTest.class,
+		BondServiceTest.class,
+		BookServiceTest.class,
+		UserServiceTest.class
+		// Add other test classes here
+})
+public class JavaApiApplicationTests{
 }

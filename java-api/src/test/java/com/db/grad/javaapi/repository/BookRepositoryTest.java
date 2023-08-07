@@ -32,6 +32,7 @@ public class BookRepositoryTest {
         User user = new User() ;
          // Set a user, get some books and assign them to user.
         user.setUserName("Mike");
+        user.setPassword("pass");
         List<Book> allbooks = br.findAll() ;
         List<Book> books = allbooks.subList(0,3) ;
         user.setBooks(books);
@@ -76,7 +77,7 @@ public class BookRepositoryTest {
             System.out.println( "ACTUAL BOOKS  ID: " + book.getId() + ",  Name: " + book.getBookName()
                     + "  object: " + book );
         }
-        }
     }
+}
 
 

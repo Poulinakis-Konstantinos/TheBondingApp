@@ -190,7 +190,7 @@ public class BondController {
         return ResponseEntity.ok().build();
     }
 
-    private int unpackUserId(String token) throws ResourceNotFoundException, AuthenticationException {
+    int unpackUserId(String token) throws ResourceNotFoundException, AuthenticationException {
         if (!tokenVerifier.verify(token)) {
             throw new AuthenticationException();
         }
