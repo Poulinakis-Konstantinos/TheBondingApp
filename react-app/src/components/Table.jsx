@@ -7,6 +7,7 @@ const Table = (props) => {
         <DataTable
             columns={props.columns}
             data={props.data}
+            
         />
     );
 };

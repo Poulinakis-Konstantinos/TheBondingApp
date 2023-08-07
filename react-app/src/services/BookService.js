@@ -23,4 +23,9 @@ export const getMyBondsLastFive = (date) => {
 }
 
 
+export const getRedeemBond = (bondId) => {
+  const bondsLastFive = axios.get(`${hostNameUrl}/getRedeemedBonds?date=${bondId}`);
+  return bondsLastFive;
+}
+
 

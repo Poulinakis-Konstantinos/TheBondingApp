@@ -9,8 +9,8 @@ const Datepicker = (props) => {
   return (
     <div className="container my-4">
       <div className="d-flex align-items-center">
-      <Button className="" variant="success" onClick={() => { props.restBonds() }}>All Bonds</Button>
-      &nbsp; &nbsp;
+      {/* <Button className="" variant="success" onClick={() => { props.restBonds() }}>All Bonds</Button>
+      &nbsp; &nbsp; */}
       <Button className="" variant="success" onClick={() => { setStartDate(new Date());
         props.getBondsByMaturityDate(startDate)}}>Today</Button>
       &nbsp; &nbsp;

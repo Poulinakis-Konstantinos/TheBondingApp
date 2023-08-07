@@ -56,7 +56,7 @@ const Details = () =>  {
 
   return (
     <>
-    <Datepicker />
+    {/* <Datepicker /> */}
     <Table data={trades} columns={columns}/>
     </>
   )
