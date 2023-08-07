@@ -58,7 +58,7 @@ const App = () => {
         <>
           <Navigation username={username} handleLogout={handleLogout} />
           <Routes>
-            <Route path="/Details/:bookId" element={<Details />} />
+            <Route path="/Details/:bondId" element={<Details />} />
             <Route path="/" element={<Home />} />
             <Route path="/user" element={<User username={username} />} />
             <Route path="*" element={<Navigate to="/" />} />
