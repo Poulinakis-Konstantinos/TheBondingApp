@@ -1,51 +1,63 @@
-import Navigation from "../components/Navigation";
 import Datepicker from "../components/Datepicker";
 import Table from "../components/Table";
-import {Route, Link, Routes, useParams} from 'react-router-dom';
-import BookService from "../services/BookService";
-
+import {useParams} from 'react-router-dom';
+import { useState, useEffect } from "react";
 import React from 'react'
+import { getTradesByUserAndBondId } from "../services/BookService";
 
-const data = [
+const columns = [
   {
-      isin: "1SAFN5645",
-      maturityDate: 2,
-      clientName: 3,
-      issuer: 4,
-      type: 5,
-      currency: 6,
-      cusip: 7
+      name: 'Trade Type',
+      selector: row => row.tradeType,
+      // cell: row => (<a href={"/Details/" + row.id} target="_blank" rel="noopener noreferrer"> {row.isin} </a> ),
   },
   {
-    isin: "2SAFN5645",
-    maturityDate: 2,
-    clientName: 3,
-    issuer: 4,
-    type: 5,
-    currency: 6,
-    cusip: 7
-},
-{
-  isin: "3SAFN5645",
-  maturityDate: 2,
-  clientName: 3,
-  issuer: 4,
-  type: 5,
-  currency: 6,
-  cusip: 7,
-  id: 1
+      name: 'Trade Currency',
+      selector: row => row.tradeCurrency,
+  },
+  {
+      name: 'Quantity',
+      selector: row => row.quantity,
+  },
+  {
+      name: 'Settlement Date',
+      selector: row => row.tradeSettlementDate,
+  },
+  {
+      name: 'Status',
+      selector: row => row.tradeStatus,
+  },
+  {
+      name: 'Trade Date',
+      selector: row => row.tradeDate,
+  },
+  {
+      name: 'Unit Price',
+      selector: row => row.unitPrice,
+  },
+  {
+    name: 'Trade CounterParty',
+    selector: row => row.tradeCounterParty.name,
 }
-]
-
+];
 
 const Details = () =>  {
-
   const params  =  useParams()
-  // alert("Book Id is " + params.bookId)
+
+  const [trades, setTrades] = useState([]);
+
+  useEffect(() => {
+    getTradesByUserAndBondId(params.bondId, 1).then(({data}) => {
+      setTrades(data);
+          })
+  }, []);
+
+
+
   return (
     <>
     <Datepicker />
-    <Table data={data}/>
+    <Table data={trades} columns={columns}/>
     </>
   )
 }

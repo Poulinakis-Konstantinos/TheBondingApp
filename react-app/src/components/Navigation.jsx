@@ -1,32 +1,40 @@
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 
-function Navigation() {
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+
+
+function Navigation({ username,  handleLogout }) {
   return (
-    <Navbar className="bg-body-secondary pb-3">
+    <Navbar className="bg-body-secondary py-3">
       <Container>
         <Navbar.Brand href="/">
-            <img
-              src="/images/logo.png"
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-              alt="Db logo"
-            /> {' '} Booking App
-          </Navbar.Brand>
+          <img
+            src="/images/logo.png"
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+            alt="Db logo"
+          />
+          <span className="ms-2">Bonds App</span>
+        </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-        <Nav className="m">
-            <Nav.Link href="/Login">Logout</Nav.Link>
+          <Nav>
+            <Nav.Link href="/" onClick={handleLogout}>
+              <FontAwesomeIcon icon={faSignOutAlt} className="me-1" />
+              Logout
+            </Nav.Link>
           </Nav>
-          <Navbar.Text>
-            Signed in as: <a href="#login">Cem Balaban</a>
+          <Navbar.Text className="d-flex align-items-center">
+            <FontAwesomeIcon icon={faUserCircle} className="me-1" />
+            <a href="/user">{username}</a>
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
-}
+};
+
 
 export default Navigation;

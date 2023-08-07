@@ -4,37 +4,44 @@ import { Link } from "react-router-dom";
 import React, { useState } from 'react';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
-const Login = ({ setIsLoggedIn }) => {
-  const [username, setUserName] = useState('');
+const Register = ({ setIsLoggedIn, setUsername }) => {
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    axios.post('http://localhost:8080/api/users/login', {
-      userName: username,
+  const handleRegister = () => {
+    const userData = {
+      userName: userName,
       password: password,
+    };
+
+    // Send the registration request to API
+    axios.post('http://localhost:8080/api/users', userData, {
+      validateStatus: function (status) {
+        return status >= 200 && status < 300; // Reject only if the status code is not in this range
+      }
     })
     .then((response) => {
+      console.log('Registration successful!');
+      // Grab the token from the response and save it in local storage
       const token = response.data;
-      console.log('Token received:', token);
-  
       localStorage.setItem('token', token);
       const decodedToken = jwt_decode(token);
       const usernameFromToken = decodedToken.sub;
-      setUserName(usernameFromToken);
-  
+      setUsername(usernameFromToken);
+    
       setIsLoggedIn(true);
+      navigate('/');
     })
     .catch((error) => {
-      if (error.response) {
-        console.error('Login failed:', error.response.data);
-        if (error.response.status === 401) {
-          alert('Wrong username or password');
-        }
-      } else {
-        console.error('Network error:', error.message);
+      console.error('Registration failed:', error);
+      if (error.response && error.response.data) {
+        alert(error.response.data);
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
       }
-      setIsLoggedIn(false);
     });
     
   };
@@ -57,16 +64,16 @@ const Login = ({ setIsLoggedIn }) => {
     
             <div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
               <form style={{width: "23rem"}}>
-                <h3 className="fw-normal mb-3 pb-3" style={{letterSpacing: "1px"}}>Log in</h3>
+                <h3 className="fw-normal mb-3 pb-3" style={{letterSpacing: "1px"}}>Register</h3>
                 <div className="form-outline mb-4">
                   <InputGroup className="mb-3">
                     <Form.Control
                       type="text"
-                      aria-label="username"
+                      aria-label="Email"
                       className="form-control-lg"
                       aria-describedby="basic-addon1"
                       placeholder="username"
-                      value={username}
+                      value={userName}
                       onChange={(e) => setUserName(e.target.value)}
                     />
                   </InputGroup>
@@ -90,14 +97,14 @@ const Login = ({ setIsLoggedIn }) => {
                   <button
                     className="btn btn-info btn-lg btn-block"
                     type="button"
-                    onClick={handleLogin}
+                    onClick={handleRegister}
                   >
-                    Login
+                    Register
                   </button>
                 </div>
     
                 <p className="small mb-5 pb-lg-2"><a className="text-muted" href="">Forgot password?</a></p>
-                <p>Don't have an account? <Link to="/register">Register here</Link></p>
+                <p>Already have an account? <Link to="/login">Login here</Link></p>
     
               </form>
     
@@ -115,4 +122,4 @@ const Login = ({ setIsLoggedIn }) => {
   );
 };
 
-export default Login;
+export default Register;

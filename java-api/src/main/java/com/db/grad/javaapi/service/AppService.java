@@ -126,4 +126,13 @@ public class AppService {
         return userService.redeemBond(bondToRedeem);
     }
 
+
+    public User findByUserName(String username) {
+        return userService.findByUsername(username);
+    }
+
+    public User findUserById(int id){
+        return userService.findById(id);
+    }
+
 }

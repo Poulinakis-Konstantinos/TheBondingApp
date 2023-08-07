@@ -5,6 +5,8 @@ import com.db.grad.javaapi.model.User;
 import com.db.grad.javaapi.repository.BondRepository;
 import com.db.grad.javaapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -14,18 +16,21 @@ import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 public class UserService {
+  
     private UserRepository ur;
+    private final BCryptPasswordEncoder passwordEncoder;
     private BondRepository br;
     private final Lock redeemLock = new ReentrantLock() ;
 
     @Autowired
-    public UserService(UserRepository ur, BondRepository br) {
-
+    public UserService(UserRepository ur, BCryptPasswordEncoder passwordEncoder,  BondRepository br) {
         this.ur = ur;
+        this.passwordEncoder = passwordEncoder;
         this.br = br;
+
     }
 
-    public void addUser(User user) { ur.save(user) ;}
+    public void saveUser(User user) { ur.save(user) ;}
 
     public List<User> getAllUsers() {
         return ur.findAll();
@@ -44,6 +49,7 @@ public class UserService {
         user.setUserName(username);
         return ur.save(user);
     }
+
 
     public Boolean redeemBond(Bond bondToRedeem) {
         redeemLock.lock();  //Acquire the lock - other users can't interfere
@@ -65,5 +71,24 @@ public class UserService {
             redeemLock.unlock(); // Release the lock
         }
         return true;
+
+    public User findByUsername(String username) {
+        return ur.findByUserName(username);
+    }
+
+    public boolean authenticateUser(String username, String password) {
+        User user = ur.findByUserName(username);
+        if (user == null) {
+            return false;
+        }
+        return passwordEncoder.matches(password, user.getPassword());
+    }
+
+    public void saveFirstUser(User user) {
+        System.out.println(user.toString());
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
+        ur.save(user);
+
     }
 }
