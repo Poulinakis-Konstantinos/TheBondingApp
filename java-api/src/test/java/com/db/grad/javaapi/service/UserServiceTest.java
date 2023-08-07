@@ -1,18 +1,15 @@
 package com.db.grad.javaapi.service;
 import com.db.grad.javaapi.model.Book;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.db.grad.javaapi.model.Bond;
 import com.db.grad.javaapi.model.User;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserServiceTest {
     @Autowired
@@ -38,7 +35,6 @@ public class UserServiceTest {
 //        List<Book> allbooks = bookService.getAllBooks() ;
 //        List<Book> books = allbooks.subList(0,3) ;
 //        user.setBooks(books);
-        user.setPassword("password");
         userService.save(user) ;
 
         // Set bonds' attributes
