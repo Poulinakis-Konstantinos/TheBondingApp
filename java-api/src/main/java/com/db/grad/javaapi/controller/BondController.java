@@ -160,9 +160,16 @@ public class BondController {
     }
 
     @GetMapping("/getMyTradesByBondId")
-    public List<Trade> getBondsByBondIdAndUserId(@RequestHeader("Authorization") String token, @RequestParam int bondId) throws AuthenticationException, ResourceNotFoundException {
+    public List<Trade> getTradesByBondIdAndUserId(@RequestHeader("Authorization") String token, @RequestParam int bondId) throws AuthenticationException, ResourceNotFoundException {
         int userId = unpackUserId(token);
         return s.findTradesByBondIdAndUserId(bondId, userId);
+    }
+
+    @GetMapping("/getMyBondById")
+    public Bond getBondByBondIdAndUserId(@RequestHeader("Authorization") String token, @RequestParam int bondId) throws AuthenticationException, ResourceNotFoundException {
+        int userId = unpackUserId(token);
+        System.out.println(bondId);
+        return s.getBondByBondIdAndUserId(bondId, userId);
     }
 
 

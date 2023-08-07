@@ -28,4 +28,19 @@ export const getRedeemBond = (bondId) => {
   return bondsLastFive;
 }
 
+export const redeemBondAxios = (bondId) => {
+  const redeemedBond = axios.get(`${hostNameUrl}/users/RedeemBond?bondId=${bondId}`);
+  return redeemedBond;
+}
+
+export const getBondByBondIdAndUserId = (bondId) => {
+  const Bond = axios.get(`${hostNameUrl}/getMyBondById?bondId=${bondId}`)
+  return Bond;
+}
+
+export const getMyClients = () => {
+  const data = axios.get(`${hostNameUrl}/users/getMyClients`)
+  return data;
+}
+
 

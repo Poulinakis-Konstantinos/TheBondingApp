@@ -64,7 +64,7 @@ public class UserService {
             }
 
             // Change the bonds status if checks have passed.
-            bondToRedeem.setBondStatus("redeemed");
+            bondToRedeem.setBondStatus("redemption triggered");
             br.save(bondToRedeem);
 
         } finally {

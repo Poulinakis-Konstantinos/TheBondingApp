@@ -8,156 +8,169 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-    @Service
-    public class AppService {
+@Service
+public class AppService {
 
-        BondService bondService;
+    BondService bondService;
 
-        TradeService tradeService;
+    TradeService tradeService;
 
-        BookService bookService;
+    BookService bookService;
 
-        UserService userService;
+    UserService userService;
 
-        TradeCounterPartyService tradeCounterPartyService;
+    TradeCounterPartyService tradeCounterPartyService;
 
-        BondCounterPartyService bondCounterPartyService;
-
-
-        @Autowired
-        public AppService(TradeService ts, BondService bondService, BookService bookService, UserService userService, TradeCounterPartyService tradeCounterPartyService, BondCounterPartyService bondCounterPartyService) {
-            this.bondService = bondService;
-            this.tradeService = ts;
-            this.bookService = bookService;
-            this.userService = userService;
-            this.tradeCounterPartyService = tradeCounterPartyService;
-            this.bondCounterPartyService = bondCounterPartyService;
-        }
-
-        public List<Trade> getAllTrades() {
-            return tradeService.getAllTrades();
-        }
-
-        public List<Bond> getAllBonds() {
-            return bondService.getAllBonds();
-        }
-
-        public List<Book> getAllBooks() {
-            return bookService.getAllBooks();
-        }
-
-        public List<TradeCounterParty> getAllTradeCounterParties() {
-            return tradeCounterPartyService.getAllTradeCounterParties();
-        }
-
-        public List<BondCounterParty> getAllBondCounterParties() {
-            return bondCounterPartyService.getAllBondCounterParties();
-        }
-
-        public void assignBooksToUser(int userId, List<Integer> bookIds) {
-            User user = userService.findById(userId);
-            List<Book> books = bookService.findAllById(bookIds);
-            user.setBooks(books);
-            userService.save(user);
-        }
-
-        public List<Bond> findBondsByBookId(int bookId) {
-            return bondService.findBondsByBookId(bookId);
-        }
-
-        public List<Bond> findBondsWithMaturityDateInFiveDays(LocalDate currentDate) {
-            return bondService.findBondsWithMaturityDateInFiveDays(currentDate);
-        }
-
-        public List<Bond> findBondsWithMaturityDateFiveDaysBefore(LocalDate currentDate) {
-            return bondService.findBondsWithMaturityDateFiveDaysBefore(currentDate);
-        }
-
-        public User addUserByName(String name) {
-            return userService.addUserByUsername(name);
-        }
+    BondCounterPartyService bondCounterPartyService;
 
 
-        public List<Bond> findBondsByUserId(int userId) {
-            // get books by user ID
-            User user = userService.findById(userId);
-//        Get ALL books that user has access to
-            List<Book> bookList = user.getBooks();
 
-
-            List<Integer> idList = new ArrayList<>();
-            for (Book book : bookList) {
-                idList.add(book.getId());
-            }
-            return bondService.findBondsByBookIds(idList);
-        }
-
-        public List<Book> findBooksByUserID(int userID) {
-            User user = userService.findById(userID);
-            return user.getBooks();
-
-        }
-
-
-        public List<Bond> findUserBondsWithMaturityDateInFiveDays(LocalDate date, int userId) {
-            User user = userService.findById(userId);
-            List<Integer> bookIds = bookService.getBookIdsByUser(user);
-            return bondService.findUserBondsWithMaturityDateInFiveDays(date, bookIds);
-        }
-
-        public List<Bond> findUserBondsWithMaturityDateFiveDaysBefore(LocalDate date, int userId) {
-            User user = userService.findById(userId);
-            List<Integer> bookIds = bookService.getBookIdsByUser(user);
-            return bondService.findUserBondsWithMaturityDateFiveDaysBefore(date, bookIds);
-        }
-
-        public List<Trade> findTradesByBondId(int bondId) {
-            return tradeService.findTradesByBondId(bondId);
-
-        }
-
-        public List<Trade> findTradesByBondIdAndUserId(int bondId, int userId) {
-            User user = userService.findById(userId);
-            List<Integer> bookIds = bookService.getBookIdsByUser(user);
-            return tradeService.findTradesByBondIdAndUserId(bondId, bookIds);
-        }
-
-        public Boolean redeemBondById(Integer bondId) {
-            Bond bondToRedeem = bondService.findById(bondId);
-            return userService.redeemBond(bondToRedeem);
-        }
-
-        public List<Bond> getRedeemedBonds(int userId) {
-            User user = userService.findById(userId);
-            List<Integer> bookIds = bookService.getBookIdsByUser(user);
-            return bondService.findAllRedeemedBonds(bookIds);
-        }
-
-
-        public User findByUserName(String username) {
-            return userService.findByUsername(username);
-        }
-
-        public User findUserById(int id) {
-            return userService.findById(id);
-        }
-
-        public void addBooksToUser(int userId, List<Integer> bookIds) {
-            User user = userService.findById(userId);
-            List<Book> existingBooks = user.getBooks();
-            List<Book> books = bookService.findAllById(bookIds);
-            existingBooks.addAll(books);
-            user.setBooks(existingBooks);
-            userService.save(user);
-        }
-
-        public List<String> getUserClientNames(int userId) {
-            User user = userService.findById(userId);
-            List<Book> userBooks = user.getBooks();
-            List<Integer> bookIds = new ArrayList();
-            for (Book userBook : userBooks) {
-                bookIds.add(userBook.getId());
-            }
-            return bookService.getClientNamesInBooks(bookIds);
-        }
+    @Autowired
+    public AppService(TradeService ts, BondService bondService, BookService bookService, UserService userService, TradeCounterPartyService tradeCounterPartyService, BondCounterPartyService bondCounterPartyService) {
+        this.bondService = bondService;
+        this.tradeService = ts;
+        this.bookService = bookService;
+        this.userService = userService;
+        this.tradeCounterPartyService = tradeCounterPartyService;
+        this.bondCounterPartyService = bondCounterPartyService;
     }
+
+    public List<Trade> getAllTrades(){
+        return tradeService.getAllTrades();
+    }
+
+    public List<Bond> getAllBonds(){
+        return bondService.getAllBonds();
+    }
+
+    public List<Book> getAllBooks(){return bookService.getAllBooks();}
+
+    public List<TradeCounterParty> getAllTradeCounterParties(){
+        return tradeCounterPartyService.getAllTradeCounterParties();
+    }
+
+    public List<BondCounterParty> getAllBondCounterParties(){
+        return bondCounterPartyService.getAllBondCounterParties();
+    }
+
+    public void assignBooksToUser(int userId, List<Integer> bookIds) {
+        User user = userService.findById(userId);
+        List<Book> books = bookService.findAllById(bookIds);
+        user.setBooks(books);
+        userService.save(user);
+    }
+
+    public List<Bond> findBondsByBookId(int bookId){
+        return bondService.findBondsByBookId(bookId);
+    }
+
+    public List<Bond> findBondsWithMaturityDateInFiveDays(LocalDate currentDate){
+        return bondService.findBondsWithMaturityDateInFiveDays(currentDate);
+    }
+
+    public List<Bond> findBondsWithMaturityDateFiveDaysBefore(LocalDate currentDate){
+        return bondService.findBondsWithMaturityDateFiveDaysBefore(currentDate);
+    }
+
+    public User addUserByName(String name){
+        return userService.addUserByUsername(name);
+    }
+
+
+    public List<Bond> findBondsByUserId(int userId) {
+        // get books by user ID
+        User user = userService.findById(userId);
+//        Get ALL books that user has access to
+        List<Book> bookList = user.getBooks();
+
+
+        List<Integer> idList= new ArrayList<>();
+        for (Book book:bookList){
+            idList.add(book.getId());
+        }
+        return bondService.findBondsByBookIds(idList);
+    }
+
+    public List<Book> findBooksByUserID(int userID) {
+        User user = userService.findById(userID) ;
+        return  user.getBooks();
+
+    }
+
+
+    public List<Bond> findUserBondsWithMaturityDateInFiveDays(LocalDate date, int userId) {
+        User user = userService.findById(userId);
+        List<Integer> bookIds = bookService.getBookIdsByUser(user) ;
+        return bondService.findUserBondsWithMaturityDateInFiveDays(date, bookIds) ;
+    }
+
+    public List<Bond> findUserBondsWithMaturityDateFiveDaysBefore(LocalDate date, int userId) {
+        User user = userService.findById(userId);
+        List<Integer> bookIds = bookService.getBookIdsByUser(user);
+        return bondService.findUserBondsWithMaturityDateFiveDaysBefore(date, bookIds);
+    }
+    public List<Trade> findTradesByBondId(int bondId) {
+        return tradeService.findTradesByBondId(bondId);
+
+    }
+
+    public List<Trade> findTradesByBondIdAndUserId(int bondId, int userId) {
+        User user = userService.findById(userId);
+        List<Integer> bookIds = bookService.getBookIdsByUser(user);
+        return tradeService.findTradesByBondIdAndUserId(bondId, bookIds);
+    }
+
+    public Boolean redeemBondById(Integer bondId) {
+        Bond bondToRedeem = bondService.findById(bondId);
+        return userService.redeemBond(bondToRedeem);
+    }
+
+    public List<Bond> getRedeemedBonds(int userId) {
+        User user = userService.findById(userId) ;
+        List<Integer> bookIds = bookService.getBookIdsByUser(user) ;
+        return bondService.findAllRedeemedBonds(bookIds) ;
+    }
+
+
+    public User findByUserName(String username) {
+        return userService.findByUsername(username);
+    }
+
+    public User findUserById(int id){
+        return userService.findById(id);
+    }
+
+    public void addBooksToUser(int userId, List<Integer> bookIds) {
+        User user = userService.findById(userId);
+        List<Book> existingBooks = user.getBooks();
+        List<Book> books = bookService.findAllById(bookIds);
+        existingBooks.addAll(books);
+        user.setBooks(existingBooks);
+        userService.save(user);
+    }
+
+    public Bond getBondByBondIdAndUserId(int bondId, int userId) {
+        User user = userService.findById(userId);
+        List<Integer> bookIds = bookService.getBookIdsByUser(user);
+        Bond bond = bondService.findById(bondId);
+
+        for (Bond bond2 : bondService.findBondsByBookIds(bookIds)) {
+            if (bond2.equals(bond)) {
+                return bond;
+            }
+        }
+        return null;
+    }
+
+    public List<String> getUserClientNames(int userId) {
+        User user = userService.findById(userId);
+        List<Book> userBooks = user.getBooks();
+        List<Integer> bookIds = new ArrayList();
+        for (Book userBook : userBooks) {
+            bookIds.add(userBook.getId());
+        }
+        return bookService.getClientNamesInBooks(bookIds);
+    }
+
+
+}

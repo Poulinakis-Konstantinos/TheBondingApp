@@ -51,8 +51,8 @@ const User = ({ username }) => {
   }, []);
 
   return (
-    <div className="container mt-5">
-      <div className="card">
+    <div className="container my-4">
+      <div className="card shadow">
         <div className="card-body">
           <h2 className="card-title">Your Account</h2>
           <p className="card-text">Username: {username}</p>

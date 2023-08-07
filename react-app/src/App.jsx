@@ -11,6 +11,9 @@ import jwt_decode from 'jwt-decode'
 import axios from 'axios';
 import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
+import Clients from "./pages/Clients";
+import { DateProvider } from './DateContext';
+
 import "./App.css";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -56,15 +59,18 @@ const App = () => {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       {isLoggedIn ? (
         <>
-          <Navigation username={username} handleLogout={handleLogout} />
+        <DateProvider>
+          <Navigation username={username} handleLogout={handleLogout}/>
           <Routes>
             <Route path="/Details/:bondId" element={<Details />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home  />} />
             <Route path="/user" element={<User username={username} />} />
             <Route path="/HomePageTest"element={<HomePage />} />
+            <Route path="/myClients"element={<Clients />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
           <Footer />
+          </DateProvider>
         </>
       ) : (
         <Routes>

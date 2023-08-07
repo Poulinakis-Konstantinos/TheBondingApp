@@ -40,4 +40,5 @@ public interface BondRepository extends JpaRepository<Bond, Integer> {
 
     @Query(value="SELECT * FROM bond WHERE id IN (SELECT bond_id FROM trade WHERE book_id IN :bookIds) AND bondStatus = 'redeemed' ", nativeQuery = true)
     List<Bond> findAllRedeemedBonds(@Param("bookIds") List<Integer> bookIds);
+
 }

@@ -66,5 +66,7 @@ public class BondService {
     }
 
 
-
+//    public Bond getBondByBondIdAndUserId(int bondId, int userId) {
+//        return br.findById(bondId);
+//    }
 }

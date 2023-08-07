@@ -73,3 +73,33 @@ height: 100%;
 .active-bond {
   color: red; 
 }
+
+.bg-body-secondary {
+  background-color: #f0f0f0; 
+}
+
+
+.nav-tabs .nav-link {
+  color: #235da9; /* Replace with the desired text color */
+}
+
+/* For WebKit-based browsers */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border: 1px solid #d0d0d0; /* A darker gray border */
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(to bottom, #a0a0a0, #e0e0e0); /* A gradient from dark gray to light gray */
+  border-radius: 6px;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #e0e0e0 #f0f0f0; /* Use the lighter gray color for the thumb */
+}

@@ -35,7 +35,7 @@ public class UserController {
     private AppService as ;
 
     @Autowired
-    public UserController(UserService userService, JWTTokenGenerator tokenGenerator, AppService as) {
+    public UserController(UserService userService, JWTTokenGenerator tokenGenerator, AppService as, JWTTokenVerifier tokenVerifier) {
         this.userService = userService;
         this.tokenGenerator = tokenGenerator;
         this.as = as;
@@ -75,14 +75,15 @@ public class UserController {
         }
     }
   
-      @GetMapping("/RedeemBond")
-    public Boolean redeemBond(Integer bondId){
-        return as.redeemBondById(bondId) ;
+    @GetMapping("/RedeemBond")
+    public Boolean redeemBond(@RequestParam Integer bondId){
+        return as.redeemBondById(bondId);
     }
 
     @GetMapping("getMyClients")
     public List<String> getMyClients(@RequestHeader("Authorization") String token) throws AuthenticationException, ResourceNotFoundException {
         int userId = unpackUserId(token);
+        System.out.println(userId);
         return as.getUserClientNames(userId);
     }
 
