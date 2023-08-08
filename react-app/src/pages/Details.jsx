@@ -95,7 +95,7 @@ const Details = () => {
               disabled={!isBondEligibleForRedemption()}
               onClick={handleRedeemModal}
             >
-              {isBondEligibleForRedemption() ? 'Trigger Redemption' : 'Not Eligible'}
+              {isBondEligibleForRedemption() ? 'Trigger Redemption' : 'Redemption not eligible'}
             </Button>
 
             </div>

@@ -229,7 +229,11 @@ useEffect(() => {
             {generateDates(selectedDate, 0, 5).map((date, index) => (
               <Col key={index}>
                 <Card style={{ height: "15rem" }}> 
-                <Card.Header style={{backgroundColor: index === 0 ? "#f05167" : index === 1 ? "#f2775e" : index === 2 ? "#f5964e" : index === 3 ? "#ffc66b" : index === 4 ? "#ffdf80" : "white"}}>{date.toDateString()}</Card.Header>
+                {/* <Card.Header style={{backgroundColor: index === 0 ? "#f05167" : index === 1 ? "#f2775e" : index === 2 ? "#f5964e" : index === 3 ? "#ffc66b" : index === 4 ? "#ffdf80" : "white"}}>{date.toDateString()}</Card.Header> */}
+                <Card.Header style={{ backgroundColor: index === 0 ? "#133c7f" : "#133c7f", color: "white" }}>
+                  {date.toDateString()}
+                </Card.Header>
+
                   <Card.Body className="scrollable"> 
                     {upcomingBonds.length > 0 
                       ? upcomingBonds.filter(
@@ -252,8 +256,8 @@ useEffect(() => {
                                 </ListGroup.Item>
                               ))}
                           </ListGroup>
-                        : "No bonds on this date" 
-                      : "No bonds on this date"} 
+                        : <p style={{ color: "gray" }}>No bonds on this date</p>
+                      : <p style={{ color: "gray" }}>No bonds on this date</p>} 
                   </Card.Body>
                 </Card>
               </Col>
@@ -265,8 +269,10 @@ useEffect(() => {
             {generateDates(selectedDate, -1, -5).map((date, index) => (
               <Col key={index}>
                 <Card style={{ height: "15rem" }}> 
-                <Card.Header style={{backgroundColor: index === 0 ? "#3e76de" : index === 1 ? "#3e99de" : index === 2 ? "#3eaede" : index === 3 ? "#4fdce0" : index === 4 ? "#49c4b0" : "white"}}>{date.toDateString()}</Card.Header>
-                  <Card.Body className="scrollable">
+                <Card.Header style={{ backgroundColor: index === 0 ? "#133c7f" : "#133c7f", color: "white" }}>
+                  {date.toDateString()}
+                </Card.Header>
+                <Card.Body className="scrollable">
                     {maturedBonds.length > 0 
                       ? maturedBonds.filter(
                           (bond) =>
@@ -289,8 +295,8 @@ useEffect(() => {
                                 </ListGroup.Item>
                               ))}
                           </ListGroup>
-                        : "No bonds on this date" 
-                      : "No bonds on this date"}
+                        : <p style={{ color: "gray" }}>No bonds on this date</p> 
+                      : <p style={{ color: "gray" }}>No bonds on this date</p>}
                   </Card.Body>
                 </Card>
               </Col>

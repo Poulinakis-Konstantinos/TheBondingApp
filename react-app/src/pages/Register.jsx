@@ -30,7 +30,7 @@ const Register = ({ setIsLoggedIn, setUsername }) => {
       localStorage.setItem('token', token);
       const decodedToken = jwt_decode(token);
       const usernameFromToken = decodedToken.sub;
-      setUsername(usernameFromToken);
+      
     
       setIsLoggedIn(true);
       navigate('/');
@@ -53,7 +53,7 @@ const Register = ({ setIsLoggedIn, setUsername }) => {
           <div className="col-sm-6 text-black">
             <div className="px-5 ms-xl-4 pt-5">
               <img
-                src="/images/logo.png"
+                src="/images/logo_square_rgb.png"
                 width="50"
                 height="50"
                 className="d-inline-block align-top"

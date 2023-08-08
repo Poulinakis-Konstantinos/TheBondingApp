@@ -46,7 +46,7 @@ const Login = ({ setIsLoggedIn }) => {
           <div className="col-sm-6 text-black">
             <div className="px-5 ms-xl-4 pt-5">
               <img
-                src="/images/logo.png"
+                src="/images/logo_square_rgb.png"
                 width="50"
                 height="50"
                 className="d-inline-block align-top"
