@@ -29,5 +29,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+!**/src/main/resources/data/
+
 ### VS Code ###
 .vscode/
+/src/main/resources/data/myh2db.trace.db

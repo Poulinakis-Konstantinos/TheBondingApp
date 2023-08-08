@@ -6,10 +6,10 @@ export const Pets = () => {
     const [pets, setPets] = useState([]);
 
     useEffect(() => {
-      findPets()
-            .then(({data}) => {
-            setPets(data);
-            });
+      setPets(findPets())
+            //.then(({data}) => {
+            //setPets(data);
+            //});
     }, []);
   return (
     <>
